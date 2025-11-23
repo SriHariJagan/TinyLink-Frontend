@@ -1,0 +1,57 @@
+/* ---------------------- */
+/*   GLOBAL RESET STYLE   */
+/* ---------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+/* ---------------------- */
+/*   LIGHT THEME COLORS   */
+/* ---------------------- */
+:root.light {
+  --text: #0a1a2a;
+  --card: #ffffff;
+  --input: #eef7ff;
+  --button: #d9ecff;
+  --hover: #cfe7ff;
+  --border: #b6d8ff;
+  --shadow: 0 3px 12px rgba(42, 144, 255, 0.15);
+
+  --accent: #3b9dff;      /* sky blue */
+  --accent-hover: #1c86f9;
+
+  --background: #f2f8ff;
+  color: var(--text);
+}
+
+/* ---------------------- */
+/*   DARK THEME COLORS    */
+/* ---------------------- */
+:root.dark {
+  --text: #e6f1ff;
+  --card: #121a24;
+  --input: #1b2633;
+  --button: #1f2c3b;
+  --hover: #243548;
+  --border: #30465f;
+  --shadow: 0 3px 14px rgba(0, 0, 0, 0.35);
+
+  --accent: #5ab0ff;        /* neon sky-blue */
+  --accent-hover: #82c4ff;
+
+  --background: #0d141c;
+  color: var(--text);
+}
+
+body{
+  background: var(--background);
+}
+
+/* Smooth transitions */
+body, .light, .dark, * {
+  transition: background 0.25s ease, color 0.25s ease, border 0.2s ease;
+}
+
