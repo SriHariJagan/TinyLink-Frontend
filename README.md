@@ -33,7 +33,7 @@ This frontend connects to your backend API to create short links, manage links, 
 
 ### 1️⃣ Clone the Project
 ```bash
-git clone https://github.com/your-username/tinylink-frontend.git
+https://github.com/SriHariJagan/TinyLink-Frontend.git
 cd tinylink-frontend
 ```
 
