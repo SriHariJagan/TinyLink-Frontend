@@ -6,10 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { DashboardContext } from "../../Store/Context/DashboardContext";
 import { ShortenContext } from "../../Store/Context/ShortenContext";
 
-
 const BASE_URL = import.meta.env.VITE_BASE_URL;
-
-
 
 const SingleLinkStats = () => {
   const { id } = useParams();
@@ -30,8 +27,8 @@ const SingleLinkStats = () => {
       const res = await getSingleLink(id);
 
       if (res.success) {
-        // Unwrap the API response correctly
         setLink(res.data?.data || {});
+        setLoading(false);
       } else {
         console.log("Error loading link:", res.message);
       }
@@ -42,43 +39,57 @@ const SingleLinkStats = () => {
     loadLink();
   }, [id, getSingleLink]);
 
-if (loading)
-  return (
-    <div className={styles.dashboardLoading}>
-      <div className={styles.loader}></div>
-      <p>Loading Dashboard...</p>
-    </div>
-  );
+  // ------------------------------------------------------
+  // Loading
+  // ------------------------------------------------------
+  if (loading) {
+    return (
+      <div className={styles.dashboardLoading}>
+        <div className={styles.loader}></div>
+        <p>Loading Dashboard...</p>
+      </div>
+    );
+  }
 
+  // ------------------------------------------------------
+  // Not Found
+  // ------------------------------------------------------
+  if (!link || Object.keys(link).length === 0) {
+    return (
+      <div className={styles.errorContainer}>
+        <p className={styles.errorText}>Link not found</p>
+        <button className={styles.backBtn} onClick={() => navigate("/app")}>
+          Go Back
+        </button>
+      </div>
+    );
+  }
 
-if (!link || Object.keys(link).length === 0) {
-  return (
-    <div className={styles.errorContainer}>
-      <p className={styles.errorText}>Link not found</p>
-      <button
-        className={styles.backBtn}
-        onClick={() => navigate("/app")}
-      >
-        Go Back
-      </button>
-    </div>
-  );
-}
-
-
-  // Safe monthly clicks array
+  // ------------------------------------------------------
+  // Graph Data (✅ FIXED)
+  // ------------------------------------------------------
   const monthlyClicks = link.monthlyClicks || [];
+
   const maxClicks =
     monthlyClicks.length > 0
       ? Math.max(...monthlyClicks.map((m) => m.clicks))
       : 0;
+
+  // Dynamic Y-axis max (minimum 10)
+  const yAxisMax = Math.max(10, Math.ceil(maxClicks / 10) * 10);
+
+  // Generate Y-axis values
+  const ySteps = 5;
+  const yValues = Array.from({ length: ySteps + 1 }, (_, i) =>
+    Math.round((yAxisMax / ySteps) * i)
+  ).reverse();
 
   // Build full short URL
   const fullShortUrl = `${BASE_URL}/${link.shortCode}`;
 
   return (
     <div className={styles.wrapper}>
-      {/* DETAILS CARD */}
+      {/* ================= DETAILS CARD ================= */}
       <div className={styles.card}>
         <h2 className={styles.title}>Link Details</h2>
 
@@ -94,6 +105,7 @@ if (!link || Object.keys(link).length === 0) {
               {fullShortUrl}
             </a>
           </div>
+
           <div>
             <p className={styles.label}>Original URL</p>
             <a
@@ -112,6 +124,7 @@ if (!link || Object.keys(link).length === 0) {
             <p className={styles.label}>Total Clicks</p>
             <p className={styles.value}>{link.clicks}</p>
           </div>
+
           <div>
             <p className={styles.label}>Last Clicked</p>
             <p className={styles.value}>
@@ -149,53 +162,51 @@ if (!link || Object.keys(link).length === 0) {
         </div>
       </div>
 
-      {/* MONTHLY GRAPH CARD */}
-      {/* MONTHLY GRAPH CARD */}
+      {/* ================= GRAPH CARD ================= */}
       <div className={styles.card}>
         <h3 className={styles.title}>Monthly Clicks</h3>
 
         <div className={styles.graphWrapper}>
-          {/* Y-Axis */}
+          {/* Y-Axis (fixed) */}
           <div className={styles.yAxis}>
-            {[0, 50, 100, 150, 200, 250, 300, 350, 400, 450, 500 ].reverse().map((val) => (
+            {yValues.map((val) => (
               <div key={val} className={styles.yLabel}>
                 {val}
               </div>
             ))}
           </div>
 
-          {/* Bars */}
-          <div className={styles.graphContainer}>
-            {monthlyClicks.length > 0 ? (
-              monthlyClicks.map((month) => (
-                <div
-                  key={month.month}
-                  className={styles.bar}
-                  style={{
-                    height: maxClicks
-                      ? `${(month.clicks / maxClicks) * 100}%`
-                      : "0%",
-                  }}
-                  title={`${month.month}: ${month.clicks} clicks`}
-                  
-                > {console.log(month)}</div>
-              ))
-            ) : (
-              <p style={{ textAlign: "center", padding: "10px" }}>
-                No click data available
-              </p>
-            )}
-          </div>
-        </div>
+          {/* Scrollable Area */}
+          <div className={styles.graphScroll}>
+            <div className={styles.graphContainer}>
+              {monthlyClicks.length > 0 ? (
+                monthlyClicks.map((month) => (
+                  <div key={month.month} className={styles.barWrapper}>
+                    <div
+                      className={styles.bar}
+                      style={{
+                        height: `${(month.clicks / yAxisMax) * 100}%`,
+                      }}
+                      title={`${month.month}: ${month.clicks} clicks`}
+                    />
+                  </div>
+                ))
+              ) : (
+                <p className={styles.noData}>No click data available</p>
+              )}
+            </div>
 
-        <div className={styles.graphLabels}>
-          {monthlyClicks.map((month) => (
-            <span key={month.month}>{month.month}</span>
-          ))}
+            {/* X-Axis labels (INSIDE scroll) */}
+            <div className={styles.graphLabels}>
+              {monthlyClicks.map((month) => (
+                <span key={month.month}>{month.month}</span>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* DELETE POPUP */}
+      {/* ================= DELETE POPUP ================= */}
       {deletePopup && (
         <div className={styles.popupOverlay}>
           <div className={styles.popup}>
@@ -211,7 +222,7 @@ if (!link || Object.keys(link).length === 0) {
               </button>
 
               <button
-                className={styles.confirmBtn}
+                className={styles.confirmDeleteBtn}
                 onClick={async () => {
                   await deleteShortURL(id);
                   refreshDashboard();

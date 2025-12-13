@@ -110,7 +110,7 @@ const ShortenForm = ({ initialData = null, onClose }) => {
       <label className={styles.label}>Short Link</label>
       <div className={styles.shortLinkWrapper}>
         <select className={styles.select} disabled>
-          <option>bit.ly</option>
+          <option>tinylk.netlify.app/</option>
         </select>
         <span className={styles.slash}>/</span>
 
@@ -123,6 +123,7 @@ const ShortenForm = ({ initialData = null, onClose }) => {
           }}
           placeholder="Enter or generate"
           className={styles.input}
+          style={{padding: "12px"}}
         />
 
         <button onClick={handleGenerate} className={styles.generateBtn}>

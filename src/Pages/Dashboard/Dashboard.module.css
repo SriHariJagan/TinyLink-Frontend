@@ -15,7 +15,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 300px; /* height of content area */
+  min-height: 80vh; /* height of content area */
   gap: 15px;
   background: var(--background);
   color: var(--text);
@@ -196,7 +196,7 @@
 .table {
   width: 100%;
   border-collapse: collapse; /* makes borders cleaner */
-  min-width: 1000px;
+  min-width: 1200px;
   background: var(--card);
   box-shadow: var(--shadow);
   border-radius: 12px;

@@ -45,7 +45,7 @@
 
 .input {
   width: 100%;
-  padding: 12px 12px 12px 40px;
+  padding: 14px 40px;
   border: 1px solid var(--border);
   border-radius: 8px;
   background: var(--input);
@@ -78,7 +78,7 @@
 
 .select {
   flex: 1;
-  padding: 12px;
+  padding: 4px 6px;
   border: 1px solid var(--border);
   border-radius: 8px;
   background: var(--input);

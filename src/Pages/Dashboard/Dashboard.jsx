@@ -174,7 +174,6 @@ const Dashboard = () => {
                           className={`${styles.btn} ${styles.copy}`}
                           onClick={() => {
                             handleCopy(item.short);
-                            refreshDashboard();
                           }}
                         >
                           <FiCopy />
@@ -212,14 +211,12 @@ const Dashboard = () => {
         isOpen={modalOpen}
         onClose={() => {
           setModalOpen(false);
-          refreshDashboard();
         }}
       >
         <ShortenForm
           initialData={selectedLink}
           onClose={() => {
             setModalOpen(false);
-            refreshDashboard();
           }}
         />
       </ModalWrapper>
