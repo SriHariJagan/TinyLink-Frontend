@@ -1,16 +1,140 @@
-# React + Vite
+# TinyLink – URL Shortener & Management Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+TinyLink is a modern URL shortening web application similar to bit.ly. It allows users to create custom short links, track click statistics, and manage links through a clean, responsive dashboard.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Live Demo
+- Frontend: https://YOUR-NETLIFY-URL.netlify.app  
+- Backend API: https://YOUR-RENDER-URL.onrender.com  
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🛠 Tech Stack
 
-## Expanding the ESLint configuration
+**Frontend**
+- React.js
+- CSS Modules
+- Framer Motion
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+**Backend**
+- Node.js
+- Express.js
+- MongoDB (Mongoose)
+
+**Hosting**
+- Netlify (Frontend)
+- Render (Backend)
+
+---
+
+## ✨ Features
+
+### Core Features
+- Create short links with optional custom codes (6–8 alphanumeric characters)
+- URL validation before saving
+- Global uniqueness check for custom codes (returns 409 if duplicate)
+- HTTP 302 redirect for valid short links
+- Click tracking (total clicks + last clicked time)
+- Delete links (returns 404 after deletion)
+
+### Dashboard (/)
+- View all short links in a table
+- Add and delete links
+- Search and filter by code or target URL
+- Copy short links to clipboard
+- Responsive layout for mobile and desktop
+
+### Stats Page (/code/:code)
+- View detailed statistics for a single short link
+
+### Health Check (/healthz)
+```json
+{
+  "ok": true,
+  "version": "1.0"
+}
+```
+
+---
+
+## 📦 Installation & Setup
+
+### 1. Clone the repository
+```bash
+git clone https://github.com/YOUR_USERNAME/TinyLink.git
+cd TinyLink
+```
+
+### 2. Backend Setup
+```bash
+cd server
+npm install
+cp .env.example .env
+npm run dev
+```
+
+### 3. Frontend Setup
+```bash
+cd client
+npm install
+npm start
+```
+
+---
+
+## 🔐 Environment Variables
+
+Create a `.env` file in the `server` folder:
+
+```env
+PORT=5000
+MONGO_URI=your_mongodb_connection_string
+BASE_URL=http://localhost:3000
+```
+
+---
+
+## 🔗 API Endpoints
+
+| Method | Endpoint | Description |
+|------|---------|-------------|
+| POST | /api/links | Create a short link (409 if code exists) |
+| GET | /api/links | List all links |
+| GET | /api/links/:code | Get stats for a link |
+| DELETE | /api/links/:code | Delete a link |
+| GET | /healthz | Health check endpoint |
+
+---
+
+## 📁 Project Structure
+
+```
+TinyLink/
+├── client/        # React frontend
+├── server/        # Node.js backend
+├── README.md
+```
+
+---
+
+## 🧪 Testing & Validation
+
+- Stable routes for automated testing
+- Proper HTTP status codes
+- Inline form validation
+- Loading, success, and error states
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+---
+
+## 👤 Author
+
+**Sri Hari Jagan**  
+Frontend / Full-Stack Developer  
+
