@@ -5,8 +5,7 @@ TinyLink is a modern URL shortening web application similar to bit.ly. It allows
 ---
 
 ## 🚀 Live Demo
-- Frontend: https://YOUR-NETLIFY-URL.netlify.app  
-- Backend API: https://YOUR-RENDER-URL.onrender.com  
+- https://tinylk.netlify.app/
 
 ---
 
@@ -61,14 +60,20 @@ TinyLink is a modern URL shortening web application similar to bit.ly. It allows
 ## 📦 Installation & Setup
 
 ### 1. Clone the repository
-```bash
-git clone https://github.com/YOUR_USERNAME/TinyLink.git
-cd TinyLink
-```
+  #### Frontend
+  ```bash
+  git clone https://github.com/SriHariJagan/TinyLink-Frontend
+  cd TinyLink
+  ```
+  ### Backend
+    ```bash
+  git https://github.com/SriHariJagan/TinyLink-Backend
+  cd TinyLink
+  ```
 
 ### 2. Backend Setup
 ```bash
-cd server
+cd backend
 npm install
 cp .env.example .env
 npm run dev
@@ -76,7 +81,7 @@ npm run dev
 
 ### 3. Frontend Setup
 ```bash
-cd client
+cd frontend
 npm install
 npm start
 ```
@@ -107,16 +112,6 @@ BASE_URL=http://localhost:3000
 
 ---
 
-## 📁 Project Structure
-
-```
-TinyLink/
-├── client/        # React frontend
-├── server/        # Node.js backend
-├── README.md
-```
-
----
 
 ## 🧪 Testing & Validation
 
@@ -127,11 +122,6 @@ TinyLink/
 
 ---
 
-## 📄 License
-
-This project is licensed under the MIT License.
-
----
 
 ## 👤 Author
 
